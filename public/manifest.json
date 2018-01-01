@@ -1,0 +1,15 @@
+{
+  "short_name": "React Boilerplate",
+  "name": "Simple React Boilerplate",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#FDF5EF"
+}
