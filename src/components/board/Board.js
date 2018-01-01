@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Workzone from 'components/workzone/Workzone';
 
 import './Board.less';
 
-class Board extends Component {
-
-  render() {
-    return (
-      <div className="board">
-        
-      </div>
-    );
-  }
-
-}
+const Board = () => (
+  <div className="board">
+    <Workzone />
+  </div>
+);
 
 export default Board;
