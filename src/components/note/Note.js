@@ -23,15 +23,15 @@ class Note extends Component {
   }
 
   render() {
-    const { id, x, y, text, depth, date } = this.props;
+    const { x, y, text, depth, date } = this.props;
 
     return (
-      <div className="note" style={{ 'top': y, 'left': x, 'zIndex': depth }} onMouseDown={this.handleMouseDown(id)} ref="note">
+      <div className="note" style={{ 'top': y, 'left': x, 'zIndex': depth }} onMouseDown={this.select} ref="note">
         <div className="note__header" onMouseDown={this.holdHeader} onMouseUp={this.releaseHeader}>
           <span className="note__date">{ date }</span>
 
           <span className="note__remove">
-            <img className="note__icon" src="/images/trash.svg" alt="remove note" />
+            <img className="note__icon" src="/images/trash.svg" alt="remove note" onClick={this.remove} />
           </span>
         </div>
 
@@ -78,8 +78,14 @@ class Note extends Component {
     this.props.onPositionUpdate(this.props.id, newX, newY);
   };
 
-  handleMouseDown = (id) => () => {
-    this.props.onSelect(id);
+  select = () => {
+    this.props.onSelect(this.props.id);
+  };
+
+  remove = (event) => {
+    event.stopPropagation();
+
+    this.props.onRemove(this.props.id);
   };
 }
 
@@ -90,6 +96,9 @@ Note.propTypes = {
   depth: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
+  onPositionUpdate: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };
 
 export default Note;

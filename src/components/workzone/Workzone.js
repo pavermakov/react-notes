@@ -20,7 +20,7 @@ class Workzone extends Component {
       return 0;
     }
 
-    return Math.max.apply(Math, this.state.notes.map(note => note.depth));
+    return this.state.notes[this.state.notes.length - 1].depth;
   }
 
   render() {
@@ -55,6 +55,7 @@ class Workzone extends Component {
         depth={depth}
         onSelect={this.handleNoteSelect}
         onPositionUpdate={this.handleNotePositionUpdate}
+        onRemove={this.handleNoteRemove}
       />
     );
   };
@@ -85,12 +86,24 @@ class Workzone extends Component {
   handleNoteSelect = (id) => {
     this.setState({
       notes: this.state.notes.map(note => note.id === id ? { ...note, depth: this.currentDepth + 1 } : note),
-    })
+    }, this.refreshDepth);
   };
 
   handleNotePositionUpdate = (id, x, y) => {
     this.setState({
       notes: this.state.notes.map(note => note.id === id ? { ...note, x, y } : note),
+    });
+  };
+
+  handleNoteRemove = (id) => {
+    this.setState({
+      notes: this.state.notes.filter(note => note.id !== id),
+    });
+  };
+
+  refreshDepth = () => {
+    this.setState({
+      notes: this.state.notes.sort((prev, curr) => prev.depth > curr.depth).map((note, index) => ({ ...note, depth: index + 1 })),
     });
   };
 }
