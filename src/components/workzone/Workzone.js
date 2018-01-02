@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { If, Then, Else } from 'react-if';
+import UID from 'uid';
+import Note from 'components/note/Note';
 import GhostText from 'components/ghost-text/GhostText';
 
 import './Workzone.less';
@@ -13,12 +15,22 @@ class Workzone extends Component {
     return this.state.notes.length > 0;
   }
 
+  get currentDepth() {
+    if (this.state.notes.length === 0) {
+      return 0;
+    }
+
+    return Math.max.apply(Math, this.state.notes.map(note => note.depth));
+  }
+
   render() {
     return (
-      <div className="workzone">
+      <div className="workzone" onDoubleClick={this.handleClick}>
         <If condition={this.hasItems}>
           <Then>
-            there are a few notes
+            <div className="workzone__notes">
+              { this.state.notes.map(this.renderNote) }
+            </div>
           </Then>
 
           <Else>
@@ -30,6 +42,57 @@ class Workzone extends Component {
       </div>
     );
   }
+
+  renderNote = ({ id, x, y, date, text, depth }) => {
+    return (
+      <Note
+        key={id}
+        id={id}
+        x={x}
+        y={y}
+        date={date}
+        text={text}
+        depth={depth}
+        onSelect={this.handleNoteSelect}
+        onPositionUpdate={this.handleNotePositionUpdate}
+      />
+    );
+  };
+
+  handleClick = (event) => {
+    if (event.target.className.indexOf('workzone') === -1) {
+      return;
+    }
+
+    this.addNote(event);
+  };
+
+  addNote = ({ clientX, clientY }) => {
+    const newNote = {
+      x: clientX - 35,
+      y: clientY - 55,
+      date: new Date().toDateString(),
+      id: UID(),
+      depth: this.currentDepth + 1,
+      text: '',
+    };
+
+    this.setState({
+      notes: [ ...this.state.notes, newNote ],
+    });
+  };
+
+  handleNoteSelect = (id) => {
+    this.setState({
+      notes: this.state.notes.map(note => note.id === id ? { ...note, depth: this.currentDepth + 1 } : note),
+    })
+  };
+
+  handleNotePositionUpdate = (id, x, y) => {
+    this.setState({
+      notes: this.state.notes.map(note => note.id === id ? { ...note, x, y } : note),
+    });
+  };
 }
 
 export default Workzone;

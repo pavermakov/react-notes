@@ -8,7 +8,9 @@
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-if": "^2.2.1"
+    "react-if": "^2.2.1",
+    "react-textarea-autosize": "^5.2.1",
+    "uid": "^0.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
