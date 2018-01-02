@@ -1,0 +1,62 @@
+@import (reference) '../../assets/styles/settings/index';
+
+.note {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: @yellow;
+  width: 200px;
+  color: @brown;
+  border: 1px solid darken(@yellow, 20%);
+  box-shadow: 5px 5px 7px fade(@grey, 70%);
+
+  &__header {
+    position: relative;
+    cursor: all-scroll;
+    padding: 10px;
+    padding-bottom: 5px;
+  }
+
+  &__date {
+    display: block;
+    text-align: center;
+    user-select: none;
+  }
+
+  &__remove {
+    width: 15px;
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    opacity: 0;
+    user-select: none;
+  }
+
+  &__header:hover > &__remove {
+    opacity: 0.4;
+  }
+
+  &__header:hover > &__remove:hover {
+    cursor: default;
+    opacity: 1;
+  }
+
+  &__icon {
+    width: 100%;
+  }
+
+  &__body {
+    padding: 10px;
+    padding-top: 5px;
+  }
+
+  &__area {
+    width: 100%;
+    background-color: transparent;
+    color: @brown;
+    font-size: 18px;
+    font-family: inherit;
+    font-weight: bold;
+    line-height: 22px;
+    text-align: center;
+  }
+}
