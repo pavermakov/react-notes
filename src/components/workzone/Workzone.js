@@ -23,6 +23,14 @@ class Workzone extends Component {
     return this.state.notes[this.state.notes.length - 1].depth;
   }
 
+  componentWillMount() {
+    this.getNotes();
+  }
+
+  componentDidUpdate() {
+    this.saveToStorage();
+  }
+
   render() {
     return (
       <div className="workzone" onDoubleClick={this.handleClick}>
@@ -56,6 +64,7 @@ class Workzone extends Component {
         onSelect={this.handleNoteSelect}
         onPositionUpdate={this.handleNotePositionUpdate}
         onRemove={this.handleNoteRemove}
+        OnNoteTextChange={this.handleNoteTextChange}
       />
     );
   };
@@ -104,6 +113,34 @@ class Workzone extends Component {
   refreshDepth = () => {
     this.setState({
       notes: this.state.notes.sort((prev, curr) => prev.depth > curr.depth).map((note, index) => ({ ...note, depth: index + 1 })),
+    });
+  };
+
+  saveToStorage = () => {
+    if (!window.localStorage) {
+      return;
+    }
+
+    const notes = JSON.stringify(this.state.notes);
+
+    localStorage.setItem('notes', notes);
+  };
+
+  getNotes = () => {
+    try {
+      const notes = JSON.parse(localStorage.getItem('notes'));
+
+      if (notes && notes.length > 0) {
+        this.setState({ notes });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  handleNoteTextChange = (id, text) => {
+    this.setState({
+      notes: this.state.notes.map(note => note.id === id ? { ...note, text } : note),
     });
   };
 }
