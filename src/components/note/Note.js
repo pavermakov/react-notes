@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ResizedArea from "react-textarea-autosize";
+import ResizedArea from "react-autosize-textarea";
 import PropTypes from 'prop-types';
 
 import './Note.less';
@@ -36,7 +36,7 @@ class Note extends Component {
         </div>
 
         <div className="note__body">
-          <ResizedArea className="note__area" defaultValue={text} ref="textarea" />
+          <ResizedArea className="note__area" value={text} ref="textarea" onChange={this.handleTextChange} />
         </div>
       </div>
     );
@@ -87,6 +87,10 @@ class Note extends Component {
 
     this.props.onRemove(this.props.id);
   };
+
+  handleTextChange = (event) => {
+    this.props.OnNoteTextChange(this.props.id, event.target.value);
+  };
 }
 
 Note.propTypes = {
@@ -99,6 +103,7 @@ Note.propTypes = {
   onPositionUpdate: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
+  OnNoteTextChange: PropTypes.func.isRequired,
 };
 
 export default Note;
