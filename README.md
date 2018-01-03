@@ -1,11 +1,6 @@
-# React Boilerplate
-A simple boilerplate to kickstart a react project. Based on create-react-app.
-
-### Technologies
-  - React
-  - ReactDOM
-  - PropTypes
+# React Notes
+A simple app for taking notes.
 
 ### Features
-  - Supports LESS pre-processor
-  - Alias for 'src' and 'node_modules' directories
+  - Drag and drop note
+  - Save notes locally for later use

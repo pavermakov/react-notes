@@ -1,11 +1,11 @@
 {
-  "short_name": "React Boilerplate",
-  "name": "Simple React Boilerplate",
+  "short_name": "React Notes",
+  "name": "Simple note taking app",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "favicon.ico",
       "sizes": "64x64",
-      "type": "image/png"
+      "type": "image/ico"
     }
   ],
   "start_url": "./index.html",
